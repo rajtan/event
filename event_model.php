@@ -73,7 +73,7 @@ class Event
 
 
     // Set all event settings in one save
-    public function set_settings($userid,$prowlkey,$consumerkey,$consumersecret,$usertoken,$usersecret,$smtpserver,$smtpuser,$smtppassword,$smtpport,$nmakey,$mqttbrokerip,$mqttbrokerport,$mqttusername,$mqttpassword)
+    public function set_settings($userid,$prowlkey,$consumerkey,$consumersecret,$usertoken,$usersecret,$smtpserver,$smtpuser,$smtppassword,$smtpport,$smtpfromname,$smtpfromemail,$nmakey,$mqttbrokerip,$mqttbrokerport,$mqttusername,$mqttpassword)
     {
       $result = $this->mysqli->query("SELECT userid  FROM event_settings WHERE `userid` = '$userid'");
       $row = $result->fetch_array();
@@ -84,7 +84,7 @@ class Event
       }
       else
       {
-        $this->mysqli->query("UPDATE event_settings SET prowlkey = '$prowlkey', consumerkey = '$consumerkey', consumersecret = '$consumersecret', usertoken = '$usertoken', usersecret = '$usersecret', smtpserver = '$smtpserver', smtpuser = '$smtpuser', smtppassword = '$smtppassword', smtpport = '$smtpport', nmakey = '$nmakey',mqttbrokerip='$mqttbrokerip', mqttbrokerport='$mqttbrokerport', mqttusername='$mqttusername', mqttpassword='$mqttpassword' WHERE userid='$userid'");
+        $this->mysqli->query("UPDATE event_settings SET prowlkey = '$prowlkey', consumerkey = '$consumerkey', consumersecret = '$consumersecret', usertoken = '$usertoken', usersecret = '$usersecret', smtpserver = '$smtpserver', smtpuser = '$smtpuser', smtppassword = '$smtppassword', smtpport = '$smtpport', smtpfromname = '$smtpfromname', smtpfromemail = '$smtpfromemail', nmakey = '$nmakey',mqttbrokerip='$mqttbrokerip', mqttbrokerport='$mqttbrokerport', mqttusername='$mqttusername', mqttpassword='$mqttpassword' WHERE userid='$userid'");
       }
     }
     public function set_status($userid, $id, $status)
@@ -257,6 +257,8 @@ class Event
 
                         $mail             = new PHPMailer();
 
+
+
                         $mail->IsSMTP(); // telling the class to use SMTP
                         $mail->SMTPDebug  = 0;                     // SMTP debug information (for testing)
                                                                    // 0 No output
@@ -278,8 +280,9 @@ class Event
 
                         $mail->Password   = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $salt, base64_decode($smtp['smtppassword']), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));   // GMAIL password
 
-                        $address = $smtp['smtpuser'];
-                        $mail->SetFrom($address, 'emoncms');
+                        //$address = $smtp['smtpuser'];
+                        //$mail->SetFrom($address, 'emoncms');
+                        $mail->SetFrom($smtp['smtpfromemail'], $smtp['smtpfromname']);
 
                         //$mail->AddReplyTo("user2@gmail.com', 'First Last");
 
@@ -297,16 +300,17 @@ class Event
                         if (strpos($dest,';') !== false) {
                             $addresses = explode(';', $dest);
                             foreach ($addresses as &$addressee) {
-                            	$mail->AddAddress($addressee, "emoncms");
+                            	$mail->AddAddress($addressee, "");
                             }
                         }
                         else {
-                            $mail->AddAddress($dest, "emoncms");
+                            $mail->AddAddress($dest, "");
                         }
                         
 
                         //$mail->AddAttachment("images/phpmailer.gif");      // attachment
                         //$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+
 
                         if(!$mail->Send()) {
                           echo "Mailer Error: " . $mail->ErrorInfo;
@@ -461,4 +465,3 @@ class Event
         }
     }
 }
-

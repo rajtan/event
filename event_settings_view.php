@@ -1,4 +1,3 @@
-
 <?php global $user,$session; ?>
 
 <h2>Event settings</h2>
@@ -31,7 +30,14 @@
         <option <?php if ($settings['smtpport'] == '587') { echo "selected"; }?> value="587">587 (TSL)</option> 
         <option <?php if ($settings['smtpport'] == '465') { echo "selected"; }?> value="465">465 (SSL)</option>    
     </select>
-    <br><br>
+    <br>
+    <label><?php echo _('Mail From (Name)'); ?></label>
+    <input type="text" name="smtpfromname"  value="<?php echo $settings['smtpfromname']; ?>" />
+    <br>
+    <label><?php echo _('Mail From (e-mail)'); ?></label>
+    <input type="text" name="smtpfromemail"  value="<?php echo $settings['smtpfromemail']; ?>" />
+    <br>
+    <br>
     <b><?php echo _('Note for gmail.com account:'); ?></b><br>
     <p><?php echo _('You have to change the settings to allow less security apps and enable application to access gmail account.'); ?><br>
 

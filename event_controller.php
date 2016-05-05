@@ -111,6 +111,9 @@
       $smtppassword = trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $salt, post('smtppassword'), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
       $smtpport = preg_replace('/[^\w\s-]/','',post('smtpport'));
 
+      $smtpfromname = post('smtpfromname');
+      $smtpfromemail = post('smtpfromemail');
+
       $consumerkey = post('consumerkey');
       $consumersecret = post('consumersecret');
       $usertoken = post('usertoken');
@@ -122,7 +125,7 @@
       $mqttpassword = trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $salt, post('mqttpassword'), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
 
 
-      $result = $event->set_settings($session['userid'],$prowlkey,$consumerkey,$consumersecret,$usertoken,$usersecret,$smtpserver,$smtpuser,$smtppassword,$smtpport,$nmakey,$mqttbrokerip,$mqttbrokerport, $mqttusername, $mqttpassword);
+      $result = $event->set_settings($session['userid'],$prowlkey,$consumerkey,$consumersecret,$usertoken,$usersecret,$smtpserver,$smtpuser,$smtppassword,$smtpport,$smtpfromname,$smtpfromemail,$nmakey,$mqttbrokerip,$mqttbrokerport, $mqttusername, $mqttpassword);
     }
 
     else if ($session['write'])

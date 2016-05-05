@@ -1,11 +1,13 @@
 <?php
 
 $schema['event_settings'] = array(
-  'userid' => array('type' => 'int(11)'),
+  'userid' => array('type' => 'int(11)','Null'=>'NO', 'Key'=>'PRI'),
   'smtpserver' => array('type' => 'varchar(60)'),
   'smtpuser' => array('type' => 'varchar(60)'),
   'smtppassword' => array('type' => 'varchar(128)'),
   'smtpport' => array('type' => 'varchar(3)'),
+  'smtpfromname' => array('type' => 'varchar(80)'),
+  'smtpfromemail' => array('type' => 'varchar(60)'), 
   'consumerkey' => array('type' => 'varchar(60)'),
   'consumersecret' => array('type' => 'varchar(60)'),
   'usertoken' => array('type' => 'varchar(60)'),
@@ -37,4 +39,3 @@ $schema['event'] = array(
   'mqtttopic' => array('type' => 'text'),
   'mqttqos' => array('type' => 'int(3)', 'default'=>0)
 );
-
