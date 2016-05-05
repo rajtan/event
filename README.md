@@ -15,7 +15,7 @@ Run the next command at your (linux) shell to ensure that PHP5 scripts can run:
 Then login into your EmonCMS modules home directory:
 cd /var/www/emoncms/Modules
 
-Close this git with:
+Clone this git with:
 sudo git clone https://github.com/emoncms/event.git
 
 Login into your EmonCMS server with admin rights and you should find Event under the new "Extras" menu.
