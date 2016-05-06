@@ -99,7 +99,7 @@ class Event
     }
 
     public function get_user_smtp($userid) {
-      $result = $this->mysqli->query("SELECT smtpserver, smtpuser, smtppassword, smtpport  FROM event_settings WHERE `userid` = '$userid'");
+      $result = $this->mysqli->query("SELECT smtpserver, smtpuser, smtppassword, smtpport, smtpfromname, smtpfromemail  FROM event_settings WHERE `userid` = '$userid'");
       $row = $result->fetch_array();
       return $row;
     }
